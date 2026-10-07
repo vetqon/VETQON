@@ -2062,14 +2062,10 @@ async function submitOrder(event) {
         ========================================
         */
 
-        const { data: savedOrder, error: supabaseError } =
+        const { error: supabaseError } =
     await supabaseClient
         .from("orders")
-        .insert([orderData])
-        .select();
-
-console.log("SUPABASE SAVED ORDER:", savedOrder);
-console.log("SUPABASE ERROR:", supabaseError);
+        .insert([orderData]);
 
 if (supabaseError) {
 
