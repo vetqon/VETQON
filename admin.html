@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VETQON | Admin</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f5f7;
+            color: #222;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo img {
+            width: 150px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .login-box h1 {
+            margin: 0 0 8px;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .login-box p {
+            text-align: center;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #7c3aed;
+        }
+
+        .login-button {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 9px;
+            background: #7c3aed;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 14px;
+        }
+
+        .admin-page {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background: #111;
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .logout-button {
+            border: 1px solid #555;
+            background: transparent;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .admin-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .page-title p {
+            margin: 7px 0 0;
+            color: #777;
+        }
+
+        .orders-container {
+            background: #fff;
+            border-radius: 14px;
+            overflow-x: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            min-width: 950px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        th {
+            background: #fafafa;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 20px;
+            background: #f3f4f6;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .loading {
+            padding: 30px;
+            text-align: center;
+            color: #777;
+        }
+
+        .empty {
+            padding: 30px;
+            text-align: center;
+            color: #777;
+        }
+
+        .customer-info {
+            line-height: 1.6;
+        }
+
+        .items {
+            white-space: pre-line;
+            line-height: 1.6;
+            max-width: 300px;
+        }
+
+        @media (max-width: 600px) {
+
+            .login-box {
+                padding: 25px 20px;
+            }
+
+            .admin-header {
+                padding: 15px;
+            }
+
+            .admin-header h1 {
+                font-size: 18px;
+            }
+
+            .admin-content {
+                padding: 20px 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- LOGIN -->
+
+<div id="login-page" class="login-container">
+
+    <div class="login-box">
+
+        <div class="logo">
+
+            <img
+                src="images/logo.png"
+                alt="VETQON"
+            >
+
+        </div>
+
+        <h1>Administration VETQON</h1>
+
+        <p>Connectez-vous pour accéder aux commandes.</p>
+
+
+        <form id="login-form">
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Mot de passe
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    required
+                    autocomplete="current-password"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Se connecter
+            </button>
+
+        </form>
+
+
+        <div
+            id="login-error"
+            class="error-message"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- ADMIN PAGE -->
+
+<div id="admin-page" class="admin-page">
+
+
+    <header class="admin-header">
+
+        <h1>
+            VETQON Admin
+        </h1>
+
+        <button
+            id="logout-button"
+            class="logout-button"
+            type="button"
+        >
+            Déconnexion
+        </button>
+
+    </header>
+
+
+    <main class="admin-content">
+
+
+        <div class="page-title">
+
+            <h2>
+                Commandes
+            </h2>
+
+            <p>
+                Liste des commandes reçues.
+            </p>
+
+        </div>
+
+
+        <div class="orders-container">
+
+            <div
+                id="orders-loading"
+                class="loading"
+            >
+                Chargement des commandes...
+            </div>
+
+
+            <div
+                id="orders-empty"
+                class="empty"
+                style="display:none;"
+            >
+                Aucune commande pour le moment.
+            </div>
+
+
+            <table
+                id="orders-table"
+                style="display:none;"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Client
+                        </th>
+
+                        <th>
+                            Produits
+                        </th>
+
+                        <th>
+                            Sous-total
+                        </th>
+
+                        <th>
+                            Livraison
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Paiement
+                        </th>
+
+                        <th>
+                            Statut
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="orders-body"></tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    const SUPABASE_URL =
+        "https://rikjkudscsqvudfltqum.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_3irD4ZSgdFnNCPG29pBFlQ_CWmnmGVi";
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+
+    const ADMIN_UID =
+        "ba190625-318a-4804-95ce-c45ce4662f5a";
+
+
+    const loginPage =
+        document.getElementById("login-page");
+
+    const adminPage =
+        document.getElementById("admin-page");
+
+    const loginForm =
+        document.getElementById("login-form");
+
+    const loginError =
+        document.getElementById("login-error");
+
+    const logoutButton =
+        document.getElementById("logout-button");
+
+    const ordersLoading =
+        document.getElementById("orders-loading");
+
+    const ordersEmpty =
+        document.getElementById("orders-empty");
+
+    const ordersTable =
+        document.getElementById("orders-table");
+
+    const ordersBody =
+        document.getElementById("orders-body");
+
+
+    function showLogin() {
+
+        loginPage.style.display = "flex";
+        adminPage.style.display = "none";
+
+    }
+
+
+    function showAdmin() {
+
+        loginPage.style.display = "none";
+        adminPage.style.display = "block";
+
+    }
+
+
+    function showLoginError(message) {
+
+        loginError.textContent = message;
+        loginError.style.display = "block";
+
+    }
+
+
+    function clearLoginError() {
+
+        loginError.textContent = "";
+        loginError.style.display = "none";
+
+    }
+
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    async function loadOrders() {
+
+        ordersLoading.style.display = "block";
+        ordersEmpty.style.display = "none";
+        ordersTable.style.display = "none";
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("orders")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+
+        ordersLoading.style.display = "none";
+
+
+        if (error) {
+
+            console.error(error);
+
+            ordersEmpty.textContent =
+                "Impossible de charger les commandes.";
+
+            ordersEmpty.style.display = "block";
+
+            return;
+
+        }
+
+
+        if (!data || data.length === 0) {
+
+            ordersEmpty.textContent =
+                "Aucune commande pour le moment.";
+
+            ordersEmpty.style.display = "block";
+
+            return;
+
+        }
+
+
+        ordersBody.innerHTML = "";
+
+
+        data.forEach(order => {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${escapeHTML(order.id)}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        new Date(order.created_at)
+                            .toLocaleString("fr-FR")
+                    )}
+                </td>
+
+                <td>
+
+                    <div class="customer-info">
+
+                        <strong>
+                            ${escapeHTML(order.customer_name)}
+                        </strong>
+
+                        <br>
+
+                        ${escapeHTML(order.customer_phone)}
+
+                        <br>
+
+                        ${escapeHTML(order.customer_email)}
+
+                        <br>
+
+                        ${escapeHTML(order.customer_city)}
+
+                        <br>
+
+                        ${escapeHTML(order.customer_address)}
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <div class="items">
+
+                        ${escapeHTML(order.order_items)}
+
+                    </div>
+
+                </td>
+
+                <td>
+                    ${escapeHTML(order.subtotal)}
+                </td>
+
+                <td>
+                    ${escapeHTML(order.delivery)}
+                </td>
+
+                <td>
+                    <strong>
+                        ${escapeHTML(order.total)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(order.payment_method)}
+                </td>
+
+                <td>
+
+                    <span class="status">
+
+                        ${escapeHTML(order.status)}
+
+                    </span>
+
+                </td>
+
+            `;
+
+
+            ordersBody.appendChild(row);
+
+        });
+
+
+        ordersTable.style.display = "table";
+
+    }
+
+
+    async function checkSession() {
+
+        const {
+            data: {
+                session
+            }
+        } = await supabaseClient.auth.getSession();
+
+
+        if (!session) {
+
+            showLogin();
+
+            return;
+
+        }
+
+
+        if (
+            session.user.id !== ADMIN_UID
+        ) {
+
+            await supabaseClient.auth.signOut();
+
+            showLogin();
+
+            showLoginError(
+                "Accès administrateur non autorisé."
+            );
+
+            return;
+
+        }
+
+
+        showAdmin();
+
+        await loadOrders();
+
+    }
+
+
+    loginForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            clearLoginError();
+
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.signInWithPassword({
+
+                    email,
+                    password
+
+                });
+
+
+            if (error) {
+
+                showLoginError(
+                    "Email ou mot de passe incorrect."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                data.user.id !== ADMIN_UID
+            ) {
+
+                await supabaseClient.auth.signOut();
+
+                showLoginError(
+                    "Ce compte n'est pas autorisé."
+                );
+
+                return;
+
+            }
+
+
+            await checkSession();
+
+        }
+    );
+
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+            await supabaseClient.auth.signOut();
+
+            showLogin();
+
+        }
+    );
+
+
+    checkSession();
+
+</script>
+
+</body>
+</html>

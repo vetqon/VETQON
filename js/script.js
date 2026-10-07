@@ -1,5 +1,22 @@
 /*
 ========================================================
+SUPABASE
+========================================================
+*/
+
+const SUPABASE_URL = "https://rikjkudscsqvudfltqum.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_3irD4ZSgdFnNCPG29pBFlQ_CWmnmGVi";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/*
+========================================================
 VETQON
 EMAILJS
 ========================================================
@@ -9,6 +26,7 @@ const EMAILJS_PUBLIC_KEY = "BWwQmBQbFyybXj1HJ";
 const EMAILJS_SERVICE_ID = "service_vetqon";
 const EMAILJS_TEMPLATE_ID = "template_cruhcpn";
 const EMAILJS_ADMIN_TEMPLATE_ID = "template_7ctdvys";
+
 if (
     typeof emailjs !== "undefined" &&
     EMAILJS_PUBLIC_KEY !== "TON_PUBLIC_KEY"
@@ -24,29 +42,10 @@ if (
 STOCK
 ========================================================
 
-IMPORTANT :
-
 Tous les produits commencent avec 20 pièces.
 
 Pour les produits avec couleurs,
 chaque couleur possède son propre stock.
-
-Exemple :
-
-26: {
-    black: 20,
-    green: 20,
-    grey: 20,
-    pink: 20,
-    yellow: 20
-}
-
-Si tu veux mettre 30 pièces de Gris :
-
-grey: 30
-
-ATTENTION :
-Le stock est sauvegardé dans le navigateur avec localStorage.
 ========================================================
 */
 
@@ -128,6 +127,7 @@ const INVENTORY_STORAGE_KEY = "vetqon_inventory_v1";
 
 
 function cloneInventory() {
+
     return JSON.parse(
         JSON.stringify(INITIAL_INVENTORY)
     );
@@ -184,11 +184,9 @@ function saveInventory() {
 
 
 /*
-Pour remettre tous les stocks à 20,
-tu peux utiliser dans la console :
-
-resetAllStock();
-
+========================================================
+RESET STOCK
+========================================================
 */
 
 function resetAllStock() {
@@ -207,16 +205,9 @@ function resetAllStock() {
 
 
 /*
-Pour modifier un stock facilement :
-
-setStock(26, 30, "grey");
-
-Cela mettra le stock Gris du produit 26 à 30.
-
-Pour un produit sans couleur :
-
-setStock(6, 30);
-
+========================================================
+MODIFIER STOCK
+========================================================
 */
 
 function setStock(
@@ -485,7 +476,9 @@ function updateProductStockStatus(
         );
 
         if (button) {
+
             button.disabled = true;
+
             button.textContent =
                 "Sold out";
         }
@@ -505,7 +498,9 @@ function updateProductStockStatus(
         );
 
         if (button) {
+
             button.disabled = false;
+
             button.textContent =
                 "Ajouter au panier";
         }
@@ -525,7 +520,9 @@ function updateProductStockStatus(
         );
 
         if (button) {
+
             button.disabled = false;
+
             button.textContent =
                 "Ajouter au panier";
         }
@@ -966,9 +963,11 @@ function addColorProduct(
 
     addToCart(
         productName +
-        (colorName
-            ? " - Couleur " + colorName
-            : ""),
+        (
+            colorName
+                ? " - Couleur " + colorName
+                : ""
+        ),
         price,
         `${productNumber}:${color}`,
         productNumber,
@@ -1022,12 +1021,14 @@ function addVariantProduct(
         productName;
 
     if (colorName) {
+
         finalName +=
             " - " +
             colorName;
     }
 
     if (size) {
+
         finalName +=
             " - Taille " +
             size;
@@ -1080,19 +1081,28 @@ function addSimpleProductToCart(
 AJOUT AU PANIER
 ========================================================
 */
+
 function animateCart() {
 
     const cartButton =
-        document.querySelector(".cart-btn");
+        document.querySelector(
+            ".cart-btn"
+        );
 
     if (!cartButton) return;
 
-    cartButton.classList.remove("cart-bounce");
+    cartButton.classList.remove(
+        "cart-bounce"
+    );
 
     void cartButton.offsetWidth;
 
-    cartButton.classList.add("cart-bounce");
+    cartButton.classList.add(
+        "cart-bounce"
+    );
 }
+
+
 function addToCart(
     name,
     price,
@@ -1144,6 +1154,7 @@ function addToCart(
     } else {
 
         cart.push({
+
             id:
                 Date.now() +
                 Math.random(),
@@ -1383,22 +1394,27 @@ function updateCart() {
                 <div class="cart-item-actions">
 
                     <div class="quantity-control">
+
                         <button
                             type="button"
                             onclick="changeCartQuantity(${item.id}, -1)">
                             −
                         </button>
 
-                        <span>${item.quantity}</span>
+                        <span>
+                            ${item.quantity}
+                        </span>
 
                         <button
                             type="button"
                             onclick="changeCartQuantity(${item.id}, 1)">
                             +
                         </button>
+
                     </div>
 
                     <button
+                        type="button"
                         class="remove-item"
                         onclick="removeFromCart(${item.id})">
                         Supprimer
@@ -1647,7 +1663,9 @@ function checkStockBeforeOrder() {
         ) {
 
             return {
+
                 valid: false,
+
                 message:
                     `Stock insuffisant pour : ${item.name}. Il reste seulement ${currentStock} pièce(s).`
             };
@@ -1733,6 +1751,12 @@ async function submitOrder(event) {
     }
 
 
+    /*
+    ============================================
+    VÉRIFICATION STOCK
+    ============================================
+    */
+
     const stockCheck =
         checkStockBeforeOrder();
 
@@ -1748,222 +1772,359 @@ async function submitOrder(event) {
     }
 
 
+    /*
+    ============================================
+    INFORMATIONS CLIENT
+    ============================================
+    */
+
     const fullName =
         document
-            .getElementById(
-                "customer-name"
-            )
+            .getElementById("customer-name")
             .value
             .trim();
 
     const city =
         document
-            .getElementById(
-                "customer-city"
-            )
+            .getElementById("customer-city")
             .value
             .trim();
 
     const address =
         document
-            .getElementById(
-                "customer-address"
-            )
+            .getElementById("customer-address")
             .value
             .trim();
 
     const email =
         document
-            .getElementById(
-                "customer-email"
-            )
+            .getElementById("customer-email")
             .value
             .trim();
 
     const phone =
         document
-            .getElementById(
-                "customer-phone"
-            )
+            .getElementById("customer-phone")
             .value
             .trim();
 
+
+    /*
+    ============================================
+    CHAMPS OBLIGATOIRES
+    ============================================
+    */
 
     if (
         !fullName ||
         !city ||
         !address ||
-        !email ||
         !phone
     ) {
 
         alert(
-            "Veuillez remplir tous les champs."
+            "Veuillez remplir tous les champs obligatoires."
         );
 
         return;
     }
 
 
+    /*
+    ============================================
+    PRODUITS DE LA COMMANDE
+    ============================================
+    */
+
     const orderItems =
-    cart
-        .map(item => {
+        cart
+            .map(item => {
 
-            const productCard =
-                getProductCard(item.id);
+                const productCard =
+                    getProductCard(
+                        item.productNumber
+                    );
 
-            const productImage =
-                productCard
-                    ? productCard.querySelector("img")
-                    : null;
+                const productImage =
+                    productCard
+                        ? productCard.querySelector("img")
+                        : null;
 
-            const imageUrl =
-                productImage
-                    ? productImage.src
-                    : "";
+                const imageUrl =
+                    productImage
+                        ? productImage.src
+                        : "";
 
-            return `
-                <table
-                    width="100%"
-                    cellpadding="0"
-                    cellspacing="0"
-                    border="0"
-                    style="margin-bottom:15px;"
-                >
-                    <tr>
+                return `
+                    <table
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        style="margin-bottom:15px;"
+                    >
 
-                        <td
-                            width="90"
-                            valign="middle"
-                            style="padding-right:15px;"
-                        >
+                        <tr>
 
-                            ${
-                                imageUrl
-                                    ? `
-                                    <img
-                                        src="${imageUrl}"
-                                        width="80"
-                                        height="80"
-                                        alt="${item.name}"
-                                        style="
-                                            display:block;
-                                            width:80px;
-                                            height:80px;
-                                            object-fit:cover;
-                                            border-radius:8px;
-                                        "
-                                    >
-                                    `
-                                    : ""
-                            }
+                            <td
+                                width="90"
+                                valign="middle"
+                                style="padding-right:15px;"
+                            >
 
-                        </td>
+                                ${
+                                    imageUrl
+                                        ? `
+                                        <img
+                                            src="${imageUrl}"
+                                            width="80"
+                                            height="80"
+                                            alt="${escapeHTML(item.name)}"
+                                            style="
+                                                display:block;
+                                                width:80px;
+                                                height:80px;
+                                                object-fit:cover;
+                                                border-radius:8px;
+                                            "
+                                        >
+                                        `
+                                        : ""
+                                }
 
-                        <td
-                            valign="middle"
-                            style="
-                                font-family:Arial, Helvetica, sans-serif;
-                                color:#222;
-                            "
-                        >
+                            </td>
 
-                            <div
+                            <td
+                                valign="middle"
                                 style="
-                                    font-size:15px;
-                                    font-weight:bold;
-                                    margin-bottom:6px;
+                                    font-family:Arial, Helvetica, sans-serif;
+                                    color:#222;
                                 "
                             >
-                                ${item.name}
-                            </div>
 
-                            <div
-                                style="
-                                    font-size:14px;
-                                    color:#666;
-                                "
-                            >
-                                Quantité : ${item.quantity}
-                            </div>
+                                <div
+                                    style="
+                                        font-size:15px;
+                                        font-weight:bold;
+                                        margin-bottom:6px;
+                                    "
+                                >
+                                    ${escapeHTML(item.name)}
+                                </div>
 
-                            <div
-                                style="
-                                    font-size:14px;
-                                    color:#666;
-                                    margin-top:3px;
-                                "
-                            >
-                                Prix : ${item.price * item.quantity} DH
-                            </div>
+                                <div
+                                    style="
+                                        font-size:14px;
+                                        color:#666;
+                                    "
+                                >
+                                    Quantité : ${item.quantity}
+                                </div>
 
-                        </td>
+                                <div
+                                    style="
+                                        font-size:14px;
+                                        color:#666;
+                                        margin-top:3px;
+                                    "
+                                >
+                                    Prix : ${item.price * item.quantity} DH
+                                </div>
 
-                    </tr>
-                </table>
-            `;
-        })
-        .join("");
+                            </td>
+
+                        </tr>
+
+                    </table>
+                `;
+            })
+            .join("");
 
 
-const subtotal =
-    getSubtotal();
+    /*
+    ============================================
+    CALCULS
+    ============================================
+    */
 
-const delivery =
-    getDelivery();
+    const subtotal =
+        getSubtotal();
 
-const total =
-    getTotal();
+    const delivery =
+        getDelivery();
+
+    const total =
+        getTotal();
 
 
-const button =
-    document.querySelector(
-        ".confirm-order-btn"
+    /*
+    ============================================
+    BOUTON
+    ============================================
+    */
+
+    const button =
+        document.querySelector(
+            ".confirm-order-btn"
+        );
+
+    if (button) {
+
+        button.classList.add(
+            "loading"
+        );
+
+        button.disabled = true;
+
+        button.textContent =
+            "Envoi de la commande...";
+    }
+
+
+    /*
+    ============================================
+    SUPABASE
+    ============================================
+    */
+
+    if (
+        typeof supabaseClient === "undefined"
+    ) {
+
+        if (button) {
+
+            button.classList.remove(
+                "loading"
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "✓ Confirmer la commande";
+        }
+
+        alert(
+            "La connexion à Supabase n'est pas configurée."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        /*
+        ========================================
+        DONNÉES COMMANDE
+        ========================================
+        */
+
+        const orderData = {
+
+            customer_name:
+                fullName,
+
+            customer_phone:
+                phone,
+
+            customer_email:
+                email || null,
+
+            customer_city:
+                city,
+
+            customer_address:
+                address,
+
+            order_items:
+                orderItems,
+
+            subtotal:
+                subtotal,
+
+            delivery:
+                delivery,
+
+            total:
+                total,
+
+            payment_method:
+                "Paiement à la livraison",
+
+            status:
+                "new"
+        };
+
+
+        /*
+        ========================================
+        ENREGISTRER DANS SUPABASE
+        ========================================
+        */
+
+        const { data: savedOrder, error: supabaseError } =
+    await supabaseClient
+        .from("orders")
+        .insert([orderData])
+        .select();
+
+console.log("SUPABASE SAVED ORDER:", savedOrder);
+console.log("SUPABASE ERROR:", supabaseError);
+
+if (supabaseError) {
+
+    console.error(
+        "Supabase error:",
+        supabaseError
     );
 
-button.classList.add(
-    "loading"
-);
-
-button.textContent =
-    "Envoi de la commande...";
-
-
-/*
-============================================
-EMAILJS
-============================================
-*/
-
-if (
-    typeof emailjs === "undefined" ||
-    EMAILJS_PUBLIC_KEY === "TON_PUBLIC_KEY" ||
-    EMAILJS_SERVICE_ID === "TON_SERVICE_ID" ||
-    EMAILJS_TEMPLATE_ID === "TON_TEMPLATE_ID" ||
-    EMAILJS_ADMIN_TEMPLATE_ID === "TON_ADMIN_TEMPLATE_ID"
-) {
-
-    button.classList.remove(
-        "loading"
+    throw new Error(
+        "Impossible d'enregistrer la commande."
     );
-
-    button.textContent =
-        "✓ Confirmer la commande";
-
-    alert(
-        "La commande est prête, mais EmailJS n'est pas encore configuré."
-    );
-
-    return;
 }
 
 
-try {
+        if (supabaseError) {
 
-    await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
+            console.error(
+                "Supabase error:",
+                supabaseError
+            );
+
+            throw new Error(
+                "Impossible d'enregistrer la commande."
+            );
+        }
+
+
+        /*
+        ========================================
+        VÉRIFICATION EMAILJS
+        ========================================
+        */
+
+        if (
+            typeof emailjs === "undefined" ||
+            EMAILJS_PUBLIC_KEY === "TON_PUBLIC_KEY" ||
+            EMAILJS_SERVICE_ID === "TON_SERVICE_ID" ||
+            EMAILJS_TEMPLATE_ID === "TON_TEMPLATE_ID" ||
+            EMAILJS_ADMIN_TEMPLATE_ID === "TON_ADMIN_TEMPLATE_ID"
+        ) {
+
+            throw new Error(
+                "EmailJS n'est pas configuré."
+            );
+        }
+
+
+        /*
+        ========================================
+        DONNÉES EMAIL
+        ========================================
+        */
+
+        const emailData = {
+
             customer_name:
                 fullName,
 
@@ -1995,55 +2156,52 @@ try {
 
             payment_method:
                 "Paiement à la livraison"
-        }
-    );
-    await emailjs.send(
-    EMAILJS_SERVICE_ID,
-    EMAILJS_ADMIN_TEMPLATE_ID,
-    {
-        customer_name:
-            fullName,
-
-        customer_city:
-            city,
-
-        customer_address:
-            address,
-
-        customer_email:
-            email,
-
-        customer_phone:
-            phone,
-
-        order_items:
-            orderItems,
-
-        subtotal:
-            subtotal + " DH",
-
-        delivery:
-            delivery === 0
-                ? "Gratuite"
-                : delivery + " DH",
-
-        total:
-            total + " DH",
-
-        payment_method:
-            "Paiement à la livraison"
-    }
-);
+        };
 
 
         /*
-        Le stock diminue uniquement
-        lorsque la commande est
-        réellement envoyée avec succès.
+        ========================================
+        EMAIL CLIENT
+        ========================================
+        */
+
+        if (email) {
+
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                emailData
+            );
+        }
+
+
+        /*
+        ========================================
+        EMAIL ADMIN
+        ========================================
+        */
+
+        await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_ADMIN_TEMPLATE_ID,
+            emailData
+        );
+
+
+        /*
+        ========================================
+        DIMINUER LE STOCK
+        ========================================
         */
 
         decreaseStockAfterOrder();
 
+
+        /*
+        ========================================
+        SUCCÈS
+        ========================================
+        */
 
         alert(
             "Merci " +
@@ -2052,12 +2210,27 @@ try {
         );
 
 
-        document
-            .getElementById(
-                "order-form"
-            )
-            .reset();
+        /*
+        ========================================
+        RESET FORMULAIRE
+        ========================================
+        */
 
+        const orderForm =
+            document.getElementById(
+                "order-form"
+            );
+
+        if (orderForm) {
+            orderForm.reset();
+        }
+
+
+        /*
+        ========================================
+        VIDER PANIER
+        ========================================
+        */
 
         cart = [];
 
@@ -2065,22 +2238,31 @@ try {
 
         closeCheckout();
 
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Order error:",
+            error
+        );
 
         alert(
-            "Une erreur est survenue pendant l'envoi de la commande. Vérifiez la configuration EmailJS."
+            "Une erreur est survenue pendant l'envoi de la commande. Vérifiez la connexion à Supabase et la configuration EmailJS."
         );
 
     } finally {
 
-        button.classList.remove(
-            "loading"
-        );
+        if (button) {
 
-        button.textContent =
-            "✓ Confirmer la commande";
+            button.classList.remove(
+                "loading"
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "✓ Confirmer la commande";
+        }
     }
 }
 
@@ -2139,6 +2321,7 @@ document.addEventListener(
                     if (
                         event.target === this
                     ) {
+
                         closeCart();
                     }
                 }
