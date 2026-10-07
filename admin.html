@@ -191,13 +191,31 @@
             white-space: nowrap;
         }
 
-        .status {
-            display: inline-block;
-            padding: 6px 9px;
+        .status-select {
+            border: 1px solid #ddd;
+            padding: 7px 10px;
             border-radius: 20px;
             background: #f3f4f6;
             font-size: 12px;
             font-weight: bold;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .status-select:focus {
+            border-color: #7c3aed;
+        }
+
+        .status-select.status-new {
+            background: #fff7ed;
+            border-color: #fed7aa;
+            color: #c2410c;
+        }
+
+        .status-select.status-prepared {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #15803d;
         }
 
         .loading {
@@ -543,6 +561,116 @@
     }
 
 
+    function getStatusHTML(order) {
+
+        const status =
+            order.status === "prepared"
+                ? "prepared"
+                : "new";
+
+
+        return `
+
+            <select
+                class="status-select status-${status}"
+                data-order-id="${escapeHTML(order.id)}"
+                onchange="updateOrderStatus(${Number(order.id)}, this.value, this)"
+            >
+
+                <option
+                    value="new"
+                    ${status === "new" ? "selected" : ""}
+                >
+                    🟠 Nouveau
+                </option>
+
+                <option
+                    value="prepared"
+                    ${status === "prepared" ? "selected" : ""}
+                >
+                    🟢 Préparée
+                </option>
+
+            </select>
+
+        `;
+
+    }
+
+
+    async function updateOrderStatus(
+        orderId,
+        newStatus,
+        selectElement
+    ) {
+
+        const oldStatus =
+            newStatus === "prepared"
+                ? "new"
+                : "prepared";
+
+
+        selectElement.disabled = true;
+
+
+        const {
+            error
+        } = await supabaseClient
+            .from("orders")
+            .update({
+                status: newStatus
+            })
+            .eq("id", orderId);
+
+
+        selectElement.disabled = false;
+
+
+        if (error) {
+
+            console.error(
+                "Erreur modification statut :",
+                error
+            );
+
+            alert(
+                "Impossible de modifier le statut de la commande."
+            );
+
+
+            selectElement.value =
+                oldStatus;
+
+
+            selectElement.classList.remove(
+                "status-new",
+                "status-prepared"
+            );
+
+
+            selectElement.classList.add(
+                `status-${oldStatus}`
+            );
+
+
+            return;
+
+        }
+
+
+        selectElement.classList.remove(
+            "status-new",
+            "status-prepared"
+        );
+
+
+        selectElement.classList.add(
+            `status-${newStatus}`
+        );
+
+    }
+
+
     async function loadOrders() {
 
         ordersLoading.style.display = "block";
@@ -670,11 +798,7 @@
 
                 <td>
 
-                    <span class="status">
-
-                        ${escapeHTML(order.status)}
-
-                    </span>
+                    ${getStatusHTML(order)}
 
                 </td>
 
