@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -216,9 +217,20 @@
         }
 
         .items {
-            white-space: pre-line;
             line-height: 1.6;
-            max-width: 300px;
+            max-width: 350px;
+        }
+
+        .items img {
+            max-width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .items table {
+            min-width: 0;
+            width: 100%;
         }
 
         @media (max-width: 600px) {
@@ -537,6 +549,7 @@
         ordersEmpty.style.display = "none";
         ordersTable.style.display = "none";
 
+
         const {
             data,
             error
@@ -631,7 +644,7 @@
 
                     <div class="items">
 
-                        ${escapeHTML(order.order_items)}
+                        ${order.order_items || ""}
 
                     </div>
 
@@ -652,7 +665,7 @@
                 </td>
 
                 <td>
-                    ${escapeHTML(order.payment_method)}
+                    ${escapeHTML(order.payement_method)}
                 </td>
 
                 <td>
