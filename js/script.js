@@ -2048,7 +2048,7 @@ async function submitOrder(event) {
             total:
                 total,
 
-            payment_method:
+            payement_method:
                 "Paiement à la livraison",
 
             status:
