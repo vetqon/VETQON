@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VETQON - Boutique de produits sportifs">
+    <title>VETQON | Sports Store</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="#" class="logo">
+        <img src="images/logo.png" alt="VETQON">
+    </a>
+
+    <nav class="navbar">
+        <a href="#home">Accueil</a>
+        <a href="#products">Produits</a>
+        <a href="#about">À propos</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <button class="cart-btn" onclick="openCart()">
+        🛒 Panier
+        <span id="cart-count">0</span>
+    </button>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <p class="small-title">VETQON SPORTS</p>
+
+        <h1>
+            Votre sport.<br>
+            Votre <span>équipement.</span>
+        </h1>
+
+        <p>
+            Découvrez notre sélection de produits sportifs
+            pour l'entraînement, les matchs et votre quotidien.
+        </p>
+
+        <a href="#products" class="hero-btn">Découvrir les produits</a>
+    </div>
+</section>
+
+
+<!-- PROMOTION -->
+<div class="delivery-banner">
+    <div class="delivery-track">
+        <span>🚚 LIVRAISON GRATUITE À PARTIR DE 199 DH</span>
+        <span>🚚 LIVRAISON GRATUITE À PARTIR DE 199 DH</span>
+        <span>🚚 LIVRAISON GRATUITE À PARTIR DE 199 DH</span>
+        <span>🚚 LIVRAISON GRATUITE À PARTIR DE 199 DH</span>
+        <span>🚚 LIVRAISON GRATUITE À PARTIR DE 199 DH</span>
+        <span>🚚 LIVRAISON GRATUITE À PARTIR DE 199 DH</span>
+    </div>
+</div>
+
+
+<section class="products-section" id="products">
+
+    <div class="section-title">
+        <p>VETQON SHOP</p>
+        <h2>Nos produits</h2>
+    </div>
+
+    <div class="products-grid">
+
+
+        <!-- 1 -->
+        <div class="product-card" data-product-id="1">
+            <div class="product-image">
+                <img src="images/product1.png" alt="Gants de gardien de but">
+            </div>
+
+            <div class="product-info">
+                <h3>Gants de gardien de but de football</h3>
+
+                <p class="product-description">
+                    Gants de gardien adaptés à l'entraînement et aux matchs.
+                </p>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product1-size" class="product-select" onchange="updateProduct1Price()">
+                    <option value="4">Taille 4</option>
+                    <option value="5">Taille 5</option>
+                    <option value="6">Taille 6</option>
+                    <option value="7">Taille 7</option>
+                    <option value="8">Taille 8</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-1"></div>
+
+                <div class="price" id="product1-price">249 DH</div>
+
+                <button class="add-btn" onclick="addProduct1ToCart()">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 2 -->
+        <div class="product-card" data-product-id="2">
+            <div class="product-image">
+                <img id="product2-image"
+                     src="images/product2-blue.png"
+                     alt="Gants de gardien professionnels">
+            </div>
+
+            <div class="product-info">
+                <h3>Gants de gardien de but professionnels antidérapants</h3>
+
+                <p class="product-description">
+                    Gants professionnels pour entraînement et football.
+                </p>
+
+                <label class="option-label">Couleur</label>
+
+                <select id="product2-color"
+                        class="product-select"
+                        onchange="changeProduct2Image()">
+                    <option value="blue">Bleu</option>
+                    <option value="green">Vert</option>
+                    <option value="orange">Orange</option>
+                    <option value="red">Rouge</option>
+                    <option value="yellow">Jaune</option>
+                </select>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product2-size" class="product-select">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-2"></div>
+
+                <div class="price">149 DH</div>
+
+                <button class="add-btn" onclick="addProduct2ToCart()">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 3 -->
+        <div class="product-card" data-product-id="3">
+            <div class="product-image">
+                <img src="images/product3.png" alt="Gants de gardien personnalisés">
+            </div>
+
+            <div class="product-info">
+                <h3>Gants de Gardien de But Professionnels Personnalisés</h3>
+
+                <p class="product-description">
+                    Pour hommes et femmes, entraînement de football.
+                </p>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product3-size" class="product-select">
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-3"></div>
+
+                <div class="price">199 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(3, 'Gants de Gardien de But Professionnels Personnalisés - Taille ' + document.getElementById('product3-size').value, 199)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 4 -->
+        <div class="product-card" data-product-id="4">
+            <div class="product-image">
+                <img src="images/product4.png" alt="Gants de gardien entraînement">
+            </div>
+
+            <div class="product-info">
+                <h3>Gants de gardien de but de football pour l'entraînement</h3>
+
+                <p class="product-description">
+                    Gants résistants pour entraînement.
+                </p>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product4-size"
+                        class="product-select"
+                        onchange="updateProduct4Price()">
+                    <option value="5">Taille 5</option>
+                    <option value="6">Taille 6</option>
+                    <option value="7">Taille 7</option>
+                    <option value="8">Taille 8</option>
+                    <option value="9">Taille 9</option>
+                    <option value="10">Taille 10</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-4"></div>
+
+                <div class="price" id="product4-price">189 DH</div>
+
+                <button class="add-btn" onclick="addProduct4ToCart()">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 5 -->
+        <div class="product-card" data-product-id="5">
+            <div class="product-image">
+                <img id="product5-image"
+                     src="images/product5-yellow.png"
+                     alt="Gants de gardien haute qualité">
+            </div>
+
+            <div class="product-info">
+                <h3>Gants de gardien de but de haute qualité</h3>
+
+                <label class="option-label">Couleur</label>
+
+                <select id="product5-color"
+                        class="product-select"
+                        onchange="changeProductImage(5, this.value, 'product5-image')">
+                    <option value="yellow">Jaune</option>
+                    <option value="orange">Orange</option>
+                </select>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product5-size" class="product-select">
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-5"></div>
+
+                <div class="price">249 DH</div>
+
+                <button class="add-btn"
+                        onclick="addVariantProduct(5, 'Gants de gardien de but de haute qualité', 249, 'product5-size')">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 6 -->
+        <div class="product-card" data-product-id="6">
+            <div class="product-image">
+                <img src="images/product6.png" alt="Ballon de football taille 5">
+            </div>
+
+            <div class="product-info">
+                <h3>Équipement d'entraînement professionnel, ballon de football taille 5</h3>
+
+                <p class="product-description">
+                    Ballon en cuir PU pour entraînement.
+                </p>
+
+                <div class="stock-status" id="stock-status-6"></div>
+
+                <div class="price">129 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(6, 'Ballon de football taille 5 en cuir PU',129)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 7 -->
+        <div class="product-card" data-product-id="7">
+            <div class="product-image">
+                <img src="images/product7.png" alt="Ballon de football">
+            </div>
+
+            <div class="product-info">
+                <h3>Ballon de football taille 5</h3>
+
+                <div class="stock-status" id="stock-status-7"></div>
+
+                <div class="price">149 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(7, 'Ballon de football taille 5',149)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 8 -->
+        <div class="product-card" data-product-id="8">
+            <div class="product-image">
+                <img src="images/product8.png" alt="Ballon de football thermocollé">
+            </div>
+
+            <div class="product-info">
+                <h3>Ballon de football haute qualité sans couture</h3>
+
+                <p class="product-description">
+                    Ballon thermocollé pour entraînement intérieur et extérieur.
+                </p>
+
+                <div class="stock-status" id="stock-status-8"></div>
+
+                <div class="price">99 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(8, 'Ballon de football haute qualité sans couture',99)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 9 -->
+        <div class="product-card" data-product-id="9">
+            <div class="product-image">
+                <img src="images/product9.png" alt="Ballon de football bleu">
+            </div>
+
+            <div class="product-info">
+                <h3>Ballon de football d'entraînement bleu taille 5</h3>
+
+                <div class="stock-status" id="stock-status-9"></div>
+
+                <div class="price">99 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(9, 'Ballon de football d’entraînement bleu taille 5',99)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 10 -->
+        <div class="product-card" data-product-id="10">
+            <div class="product-image">
+                <img src="images/product10.png" alt="Protège-tibias de football">
+            </div>
+
+            <div class="product-info">
+                <h3>Protège-tibias de football imperméables</h3>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product10-size" class="product-select">
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-10"></div>
+
+                <div class="price">49 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(10, 'Protège-tibias de football - Taille ' + document.getElementById('product10-size').value,49)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 11 -->
+        <div class="product-card" data-product-id="11">
+            <div class="product-image">
+                <img src="images/product11.png" alt="Manchons de protection tibia">
+            </div>
+
+            <div class="product-info">
+                <h3>Manchons de protection de tibia sans couture</h3>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product11-size" class="product-select">
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-11"></div>
+
+                <div class="price">49 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(11, 'Manchons de protection de tibia - Taille ' + document.getElementById('product11-size').value,49)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 12 -->
+        <div class="product-card" data-product-id="12">
+            <div class="product-image">
+                <img src="images/product12.png" alt="Genouillères à compression">
+            </div>
+
+            <div class="product-info">
+                <h3>Genouillères à Compression</h3>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product12-size" class="product-select">
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                    <option>XL</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-12"></div>
+
+                <div class="price">39 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(12, 'Genouillères à Compression - Taille ' + document.getElementById('product12-size').value,39)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 13 -->
+        <div class="product-card" data-product-id="13">
+            <div class="product-image">
+                <img src="images/product13.png" alt="Volley-ball">
+            </div>
+
+            <div class="product-info">
+                <h3>Volley-ball</h3>
+
+                <div class="stock-status" id="stock-status-13"></div>
+
+                <div class="price">59 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(13, 'Volley-ball',59)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 14 -->
+        <div class="product-card" data-product-id="14">
+            <div class="product-image">
+                <img src="images/product14.png" alt="Ballon de basketball en caoutchouc">
+            </div>
+
+            <div class="product-info">
+                <h3>Ballon de basketball en caoutchouc</h3>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product14-size" class="product-select">
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-14"></div>
+
+                <div class="price">99 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(14, 'Ballon de basketball en caoutchouc - Taille ' + document.getElementById('product14-size').value,99)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 15 -->
+        <div class="product-card" data-product-id="15">
+            <div class="product-image">
+                <img src="images/product15.png" alt="Ballons de basketball">
+            </div>
+
+            <div class="product-info">
+                <h3>Ballons de basketball</h3>
+
+                <div class="stock-status" id="stock-status-15"></div>
+
+                <div class="price">199 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(15, 'Ballon de basketball',199)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 16 -->
+        <div class="product-card" data-product-id="16">
+            <div class="product-image">
+                <img src="images/product16.png" alt="Ballon de volley-ball rose">
+            </div>
+
+            <div class="product-info">
+                <h3>Ballon de volley-ball en matériau doux au toucher</h3>
+
+                <div class="stock-status" id="stock-status-16"></div>
+
+                <div class="price">99 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(16, 'Ballon de volley-ball rose',99)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 17 -->
+        <div class="product-card" data-product-id="17">
+            <div class="product-image">
+                <img src="images/product17.png" alt="Ballon de volley-ball">
+            </div>
+
+            <div class="product-info">
+                <h3>Ballons de volley-ball</h3>
+
+                <div class="stock-status" id="stock-status-17"></div>
+
+                <div class="price">99 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(17, 'Ballon de volley-ball',99)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 18 -->
+        <div class="product-card" data-product-id="18">
+            <div class="product-image">
+                <img id="product18-image"
+                     src="images/product18-black.png"
+                     alt="Chaussures de football">
+            </div>
+
+            <div class="product-info">
+                <h3>Les Chaussures de Football, Godass</h3>
+
+                <label class="option-label">Couleur</label>
+
+                <select id="product18-color"
+                        class="product-select"
+                        onchange="changeProductImage(18,this.value,'product18-image')">
+                    <option value="black">Noir</option>
+                    <option value="blue">Bleu</option>
+                    <option value="white">Blanc</option>
+                </select>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product18-size" class="product-select">
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
+                    <option>43</option>
+                    <option>44</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-18"></div>
+
+                <div class="price">249 DH</div>
+
+                <button class="add-btn"
+                        onclick="addVariantProduct(18,'Les Chaussures de Football, Godass',249,'product18-size')">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 19 -->
+        <div class="product-card" data-product-id="19">
+            <div class="product-image">
+                <img id="product19-image"
+                     src="images/product19-black.png"
+                     alt="Chaussures de football">
+            </div>
+
+            <div class="product-info">
+                <h3>Les Chaussures de Football</h3>
+
+                <label class="option-label">Couleur</label>
+
+                <select id="product19-color"
+                        class="product-select"
+                        onchange="changeProductImage(19,this.value,'product19-image')">
+                    <option value="black">Noir</option>
+                    <option value="blue">Bleu</option>
+                    <option value="white">Blanc</option>
+                </select>
+
+                <label class="option-label">Taille</label>
+
+                <select id="product19-size" class="product-select">
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
+                    <option>43</option>
+                    <option>44</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-19"></div>
+
+                <div class="price">249 DH</div>
+
+                <button class="add-btn"
+                        onclick="addVariantProduct(19,'Les Chaussures de Football',249,'product19-size')">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 20 -->
+        <div class="product-card" data-product-id="20">
+            <div class="product-image">
+                <img id="product20-image"
+                     src="images/product20-black.png"
+                     alt="Chaussettes de football">
+            </div>
+
+            <div class="product-info">
+                <h3>Chaussettes de football pour jeunes hommes</h3>
+
+                <label class="option-label">Couleur</label>
+
+                <select id="product20-color"
+                        class="product-select"
+                        onchange="changeProductImage(20,this.value,'product20-image')">
+                    <option value="black">Noir</option>
+                    <option value="blue">Bleu</option>
+                    <option value="red">Rouge</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-20"></div>
+
+                <div class="price">39 DH</div>
+
+                <button class="add-btn"
+                        onclick="addColorProduct(20,'Chaussettes de football pour jeunes hommes',39,'product20-image')">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 21 -->
+        <div class="product-card" data-product-id="21">
+            <div class="product-image">
+                <img src="images/product21.png" alt="Corde à sauter réglable">
+            </div>
+
+            <div class="product-info">
+                <h3>Corde à sauter réglable en PP durable</h3>
+
+                <p class="product-description">
+                    Corde rapide pour enfants et adultes.
+                </p>
+
+                <div class="stock-status" id="stock-status-21"></div>
+
+                <div class="price">39 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(21,'Corde à sauter réglable en PP',39)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 22 -->
+        <div class="product-card" data-product-id="22">
+            <div class="product-image">
+                <img src="images/product22.png" alt="Corde à sauter">
+            </div>
+
+            <div class="product-info">
+                <h3>Corde à sauter</h3>
+
+                <div class="stock-status" id="stock-status-22"></div>
+
+                <div class="price">39 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(22,'Corde à sauter',39)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 23 -->
+        <div class="product-card" data-product-id="23">
+            <div class="product-image">
+                <img id="product23-image"
+                     src="images/product23.png"
+                     alt="Sac à cordon">
+            </div>
+
+            <div class="product-info">
+                <h3>Sac à cordon en toile réutilisable</h3>
+
+                <label class="option-label">Couleur</label>
+
+                <select id="product23-color"
+                        class="product-select"
+                        onchange="changeProductImage(23,this.value,'product23-image')">
+                    <option value="black">Noir</option>
+                    <option value="white">Blanc</option>
+                    <option value="green">Vert</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-23"></div>
+
+                <div class="price">39 DH</div>
+
+                <button class="add-btn"
+                        onclick="addColorProduct(23,'Sac à cordon en toile réutilisable',39,'product23-image')">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 24 -->
+        <div class="product-card" data-product-id="24">
+            <div class="product-image">
+                <img src="images/product24.png" alt="Solution de rangement multisports">
+            </div>
+
+            <div class="product-info">
+                <h3>Solution de rangement multisports</h3>
+
+                <div class="stock-status" id="stock-status-24"></div>
+
+                <div class="price">129 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(24,'Solution de rangement multisports',129)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 25 -->
+        <div class="product-card" data-product-id="25">
+            <div class="product-image">
+                <img src="images/product25.png" alt="Sac de sport multifonctionnel">
+            </div>
+
+            <div class="product-info">
+                <h3>Sac de sport multifonctionnel</h3>
+
+                <div class="stock-status" id="stock-status-25"></div>
+
+                <div class="price">99 DH</div>
+
+                <button class="add-btn"
+                        onclick="addSimpleProductToCart(25,'Sac de sport multifonctionnel',99)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 26 -->
+        <div class="product-card" data-product-id="26">
+            <div class="product-image">
+                <img id="product26-image"
+                     src="images/product26-black.png"
+                     alt="Sac de voyage et sport">
+            </div>
+
+            <div class="product-info">
+                <h3>Sac de voyage, sac de sport, Gym</h3>
+
+                <label class="option-label">Couleur</label>
+
+                <select id="product26-color"
+                        class="product-select"
+                        onchange="changeProductImage(26,this.value,'product26-image')">
+                    <option value="black">Noir</option>
+                    <option value="green">Vert</option>
+                    <option value="grey">Gris</option>
+                    <option value="pink">Rose</option>
+                    <option value="yellow">Jaune</option>
+                </select>
+
+                <div class="stock-status" id="stock-status-26"></div>
+
+                <div class="price">59 DH</div>
+
+                <button class="add-btn"
+                        onclick="addColorProduct(26,'Sac de voyage, sac de sport, Gym',59,'product26-image')">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="about" id="about">
+    <p class="small-title">À PROPOS</p>
+
+    <h2>Bienvenue chez VETQON</h2>
+
+    <p>
+        VETQON est une boutique dédiée aux passionnés de sport.
+        Nous proposons des équipements pour le football,
+        le basketball, le volleyball, le fitness et l'entraînement.
+    </p>
+</section>
+
+
+<section class="contact" id="contact">
+    <p class="small-title">CONTACT</p>
+
+    <h2>Besoin d'aide ?</h2>
+
+    <p>
+        Notre équipe est à votre disposition pour toute question.
+    </p>
+
+    <a href="mailto:vetqon.contact@gmail.com" class="contact-email">
+        ✉ vetqon.contact@gmail.com
+    </a>
+</section>
+
+</main>
+
+
+<!-- PANIER -->
+
+<div class="cart-overlay" id="cart-overlay">
+
+    <div class="cart">
+
+        <button class="close-cart" onclick="closeCart()">×</button>
+
+        <div class="cart-header">
+            <p class="small-title">VETQON</p>
+            <h2>Votre panier</h2>
+        </div>
+
+        <div id="cart-items"></div>
+
+        <div class="cart-summary">
+
+            <div class="summary-line">
+                <span>Sous-total</span>
+                <strong><span id="cart-subtotal">0</span> DH</strong>
+            </div>
+
+            <div class="summary-line">
+                <span>Livraison</span>
+                <strong id="delivery-cost">Gratuite</strong>
+            </div>
+
+            <div class="cart-message" id="delivery-message">
+                Livraison gratuite à partir de 199 DH
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <strong><span id="cart-total">0</span> DH</strong>
+            </div>
+
+            <button class="checkout-btn" onclick="checkout()">
+                Passer une commande
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- FORMULAIRE COMMANDE -->
+
+<div class="checkout-form-overlay" id="checkout-form">
+
+    <div class="checkout-form-box">
+
+        <button class="close-checkout" onclick="closeCheckout()">×</button>
+
+        <div class="checkout-header">
+            <p class="small-title">VETQON</p>
+            <h2>Finaliser votre commande</h2>
+            <span>
+                Livraison à domicile • Paiement à la livraison
+            </span>
+        </div>
+
+        <form id="order-form" onsubmit="submitOrder(event)">
+
+            <div class="form-group">
+                <label for="customer-name">Nom complet</label>
+                <input
+                    type="text"
+                    id="customer-name"
+                    placeholder="Votre nom complet"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="customer-city">Ville</label>
+                <input
+                    type="text"
+                    id="customer-city"
+                    placeholder="Votre ville"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="customer-address">Adresse</label>
+                <textarea
+                    id="customer-address"
+                    placeholder="Votre adresse complète"
+                    required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="customer-email">E-mail</label>
+                <input
+                    type="email"
+                    id="customer-email"
+                    placeholder="exemple@gmail.com"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="customer-phone">Numéro de téléphone</label>
+                <input
+                    type="tel"
+                    id="customer-phone"
+                    placeholder="06XXXXXXXX"
+                    required>
+            </div>
+
+            <div class="order-preview">
+                <h3>Résumé de la commande</h3>
+
+                <div id="checkout-items"></div>
+
+                <div class="checkout-summary-lines">
+
+                    <div class="checkout-summary-line">
+                        <span>Sous-total</span>
+                        <strong><span id="checkout-subtotal">0</span> DH</strong>
+                    </div>
+
+                    <div class="checkout-summary-line">
+                        <span>Livraison</span>
+                        <strong id="checkout-delivery">Gratuite</strong>
+                    </div>
+
+                    <div class="checkout-summary-total">
+                        <span>Total à payer</span>
+                        <strong><span id="checkout-total-price">0</span> DH</strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" class="confirm-order-btn">
+                ✓ Confirmer la commande
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+
+<footer>
+
+    <div class="social-links">
+
+        <a href="https://www.instagram.com/vet_qon"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="social-link instagram"
+   aria-label="Instagram VETQON">
+
+    <svg viewBox="0 0 24 24" aria-hidden="true" class="instagram-icon">
+        <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zm5.25-3a1.25 1.25 0 1 1-1.25 1.25 1.25 0 0 1 1.25-1.25z"></path>
+    </svg>
+
+    <span>Instagram</span>
+
+</a>
+
+
+        <a href="https://www.tiktok.com/@vet_qon"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="social-link tiktok"
+           aria-label="TikTok VETQON">
+
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15.5 3c.3 2.2 1.5 3.7 3.5 4.2v3.1c-1.3-.1-2.5-.5-3.5-1.2v6.2c0 4-2.5 6.7-6.2 6.7-3.1 0-5.3-2.1-5.3-5 0-3.2 2.6-5.5 6-5.5.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.1-1-.1-1.5 0-2.6.9-2.6 2.2 0 1.2.9 2.1 2.1 2.1 1.5 0 2.5-1.1 2.5-3.1V3h3.5z"></path>
+            </svg>
+
+            <span>TikTok</span>
+
+        </a>
+
+
+        <a href="https://www.facebook.com/profile.php?id=61595376291319"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="social-link facebook"
+           aria-label="Facebook VETQON">
+
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14 8h3V4.5c-.5-.1-1.8-.2-3.3-.2-3.3 0-5.6 2-5.6 5.7v3.2H5v3.9h3.1V21h3.8v-3.9H15l.5-3.9h-3.6V10.4c0-1.1.3-2.4 2.1-2.4z"></path>
+            </svg>
+
+            <span>Facebook</span>
+
+        </a>
+
+    </div>
+
+    <p>© 2026 VETQON — Tous droits réservés.</p>
+
+</footer>
+
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
