@@ -17,7 +17,63 @@
 </head>
 
 <body>
+<!-- SITE TEMPORAIREMENT INDISPONIBLE -->
+<div id="maintenance-screen">
+    <div class="maintenance-box">
+        <img src="images/logo.png" alt="VETQON" class="maintenance-logo">
 
+        <h1>Site temporairement indisponible</h1>
+
+        <p>
+            Le site est actuellement en cours de préparation.
+        </p>
+
+        <p>
+            Merci de revenir bientôt.
+        </p>
+    </div>
+</div>
+
+<style>
+    #maintenance-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        background: rgba(255, 255, 255, 0.98);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 25px;
+        box-sizing: border-box;
+    }
+
+    .maintenance-box {
+        width: min(90%, 500px);
+    }
+
+    .maintenance-logo {
+        width: 120px;
+        max-width: 60%;
+        height: auto;
+        margin-bottom: 25px;
+    }
+
+    .maintenance-box h1 {
+        margin: 0 0 15px;
+        font-family: Arial, sans-serif;
+        font-size: 28px;
+        color: #111;
+    }
+
+    .maintenance-box p {
+        margin: 8px 0;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666;
+    }
+</style>
 <header class="header">
     <a href="#" class="logo">
         <img src="images/logo.png" alt="VETQON">
